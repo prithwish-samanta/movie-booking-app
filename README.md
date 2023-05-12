@@ -11,7 +11,7 @@ The core modules of movie booking app are:
 ## Todo
 - [x] Implement user-auth-service
 - [x] Implement movie-catalog-service
-- [ ] Implement tickit-booking-service
+- [x] Implement tickit-booking-service
 - [ ] Implement admin-service 
 - [ ] Add spring-cloud
 - [ ] Add swagger documentation
