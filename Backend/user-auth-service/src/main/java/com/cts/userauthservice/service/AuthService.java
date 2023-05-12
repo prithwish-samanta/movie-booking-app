@@ -16,6 +16,7 @@ import com.cts.userauthservice.dto.LoginRequest;
 import com.cts.userauthservice.dto.LoginResponse;
 import com.cts.userauthservice.dto.PasswordChangeRequest;
 import com.cts.userauthservice.dto.RegistrationRequest;
+import com.cts.userauthservice.dto.ValidationDto;
 import com.cts.userauthservice.exceptions.EmailAlreadyExistsException;
 import com.cts.userauthservice.exceptions.ResourceNotFoundException;
 import com.cts.userauthservice.model.Role;
@@ -88,6 +89,22 @@ public class AuthService {
 		}
 		user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		userRepository.save(user);
+	}
+
+	public ValidationDto validateAuthToken(String token) {
+		ValidationDto response = new ValidationDto();
+		try {
+			token = token.substring(7);
+			String email = jwtProvider.extractSubject(token);
+			User user = userRepository.findByEmail(email)
+					.orElseThrow(() -> new ResourceNotFoundException("No user found with email: " + email));
+			response.setStatus(true);
+			response.setUserId(user.getUserId());
+			response.setRole(user.getRole().toString());
+		} catch (Exception e) {
+			response.setStatus(false);
+		}
+		return response;
 	}
 
 	private String generateUserId() {
