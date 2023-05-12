@@ -24,12 +24,17 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	private String userId;
+	
 	@Column(nullable = false)
 	private String firstName;
+	
 	@Column(nullable = false)
 	private String lastName;
+	
 	@Column(unique = true)
 	private String email;
+	
+	@Column(nullable = false)
 	private String password;
 
 	@Enumerated(EnumType.STRING)
