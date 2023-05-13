@@ -12,7 +12,7 @@ The core modules of movie booking app are:
 - [x] Implement user-auth-service
 - [x] Implement movie-catalog-service
 - [x] Implement tickit-booking-service
-- [ ] Implement admin-service 
+- [x] Implement admin-service 
 - [ ] Add spring-cloud
 - [ ] Add swagger documentation
 - [ ] Work on kafka implementation
