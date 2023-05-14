@@ -33,6 +33,8 @@ public class AdminService {
 	private TheaterRepository theaterRepository;
 	@Autowired
 	private TicketBookingRepository bookingRepository;
+	@Autowired
+	private MovieProducer movieProducer;
 
 	public void updateTicketStatus(String token, String ticketId, String newStatus) {
 		if (isAdmin(token)) {
@@ -47,18 +49,21 @@ public class AdminService {
 
 	public void addMovie(String token, AddMovieRequest request) {
 		if (isAdmin(token)) {
-			//Create movie entity object from the request
+			// Create movie entity object from the request
 			Movie movie = Movie.builder().id("M" + generateRandomId()).title(request.getTitle())
 					.description(request.getDescription()).releaseDate(request.getReleaseDate())
 					.runtime(request.getRuntime()).genre(request.getGenre()).language(request.getLanguage())
 					.country(request.getCountry()).director(request.getDescription()).cast(request.getCast())
 					.rating(request.getRating()).posterUrl(request.getPosterUrl()).trailerUrl(request.getTrailerUrl())
 					.build();
-			
-			//Save the movie in the database
+
+			// Save the movie in the database
 			movieRepository.save(movie);
-			
-			//Foe each show for the movie, create show entity object and save in database
+
+			// Create the new movie creation kafka event
+			movieProducer.sendMessage("New movie created. Id: " + movie.getId());
+
+			// Foe each show for the movie, create show entity object and save in database
 			for (ShowingDto dto : request.getShows()) {
 				Theater theater = theaterRepository.findById(dto.getTheaterId()).orElseThrow(
 						() -> new ResourceNotFoundException("No theater found with id: " + dto.getTheaterId()));
