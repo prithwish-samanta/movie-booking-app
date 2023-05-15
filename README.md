@@ -15,7 +15,7 @@ The core modules of movie booking app are:
 - [x] Implement admin-service 
 - [ ] Add spring-cloud
 - [x] Add swagger documentation
-- [ ] Work on kafka implementation
+- [x] Work on kafka implementation
 - [ ] Integrate Prometheus and Grafana
 - [ ] Work on Kibana configuration
 - [ ] Unit testing 
