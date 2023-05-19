@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cts.moviecatalogservice.model.Movie;
 
-public interface MovieRepository extends JpaRepository<Movie, String>{
+import java.util.List;
 
+public interface MovieRepository extends JpaRepository<Movie, String>{
+    public List<Movie>  findMoviesByTitleContains(String keyWord);
 }
