@@ -19,6 +19,7 @@ The core modules of movie booking app are:
 - [ ] Integrate Prometheus and Grafana
 - [ ] Work on Kibana configuration
 - [ ] Unit testing 
+- [x] Change The Schema to NoSQL MongoDB 
 
 ## Tech Stack
 

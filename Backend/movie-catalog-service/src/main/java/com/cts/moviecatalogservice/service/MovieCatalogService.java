@@ -1,6 +1,7 @@
 package com.cts.moviecatalogservice.service;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,26 @@ public class MovieCatalogService {
 				.language(movie.getLanguage()).country(movie.getCountry()).director(movie.getDirector())
 				.cast(movie.getCast()).rating(movie.getRating()).posterUrl(movie.getPosterUrl())
 				.trailerUrl(movie.getTrailerUrl()).shows(shows).build();
+	}
+
+	@Transactional(readOnly = true)
+	public AllMovieResponse getMovieByName(String name){
+		List<Movie> movies = movieRepository.findMoviesByTitleContains(name);
+		List<MovieDto> response_Movies =  movies.stream().map(m->MovieDto.builder()
+				 .id(m.getId()).
+				 title(m.getTitle())
+				.genre(m.getGenre())
+				.description(m.getDescription())
+				.posterUrl(m.getPosterUrl())
+				.rating(m.getRating())
+				.cast(m.getCast())
+				.country(m.getCountry())
+				.director(m.getDirector())
+				.releaseDate(m.getReleaseDate())
+				.trailerUrl(m.getTrailerUrl())
+				.build()
+		).collect(Collectors.toList());
+		return AllMovieResponse.builder().movies(response_Movies).build();
 	}
 
 }

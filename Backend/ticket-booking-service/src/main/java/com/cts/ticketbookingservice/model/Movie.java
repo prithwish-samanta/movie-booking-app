@@ -3,20 +3,17 @@ package com.cts.ticketbookingservice.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "tb_movie")
+@Document(collection = "tb_movie")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,42 +22,42 @@ public class Movie {
 	@Id
 	private String id;
 
-	@Column(nullable = false)
+	@Field
 	private String title;
 
-	@Column(nullable = false, length = 1500)
+	@Field
 	private String description;
 
-	@Column(nullable = false)
+	@Field
 	private LocalDate releaseDate;
 
-	@Column(nullable = false)
+	@Field
 	private int runtime;
 
-	@Column(nullable = false)
+	@Field
 	private String genre;
 
-	@Column(nullable = false)
+	@Field
 	private String language;
 
-	@Column(nullable = false)
+	@Field
 	private String country;
 
-	@Column(nullable = false)
+	@Field
 	private String director;
 
-	@Column(nullable = false)
+	@Field
 	private String cast;
 
-	@Column(nullable = false)
+	@Field
 	private String rating;
 
-	@Column(nullable = false)
+	@Field
 	private String posterUrl;
 
-	@Column(nullable = false)
+	@Field
 	private String trailerUrl;
 
-	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Showing> shows;
+	@DocumentReference(lazy = true)
+	private List<Showing> shows;
 }

@@ -19,6 +19,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.util.List;
+
 @Tag(name = "Movie Catalog", description = "movie API")
 @RestController
 public class MovieCatalogController {
@@ -38,10 +40,23 @@ public class MovieCatalogController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Movie details retrieve successful", content = @Content(schema = @Schema(implementation = MovieDto.class))),
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	@GetMapping("/movies/search/{movieById}")
+	@GetMapping("/movies/search/id/{movieById}")
 	public ResponseEntity<MovieDto> getMovieById(
 			@Parameter(description = "Id of the movie", required = true) @PathVariable String movieById) {
 		MovieDto movie = catalogService.getMovieById(movieById);
 		return ResponseEntity.ok(movie);
 	}
+
+	//Add Search BY Name Functionality
+	@Operation(summary = "Search movie by title keyword", description = "Get Matching Movies By Searching the Movie Title")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "All movie Related to keyword retrieve successful", content = @Content(schema = @Schema(implementation = AllMovieResponse.class))) })
+	@GetMapping("/movies/search/name/{movieName}")
+	public ResponseEntity<AllMovieResponse> getAllMatchingMovies(
+			@Parameter(description = "The Keyword of title of the movie", required = true)
+			@PathVariable("movieName") String movieName){
+		AllMovieResponse movies = catalogService.getMovieByName(movieName);
+		return ResponseEntity.ok(movies);
+	}
+
 }

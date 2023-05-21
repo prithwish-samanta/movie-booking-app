@@ -1,22 +1,17 @@
 package com.cts.userauthservice.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "tb_user")
+@Document(collection = "tb_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,27 +19,26 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	private String userId;
-	
-	@Column(nullable = false)
+
+	@Field
 	private String firstName;
-	
-	@Column(nullable = false)
+
+	@Field
 	private String lastName;
-	
-	@Column(unique = true)
+
+	@Field
 	private String email;
-	
-	@Column(nullable = false)
+
+	@Field
 	private String password;
 
-	@Enumerated(EnumType.STRING)
+	@Field
 	private Role role;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "secret_question_id", nullable = false)
+	@DocumentReference
 	private SecretQuestion secretQuestion;
 
-	@Column(name = "answer", nullable = false)
+	@Field
 	private String answerToSecretQuestion;
 
 }

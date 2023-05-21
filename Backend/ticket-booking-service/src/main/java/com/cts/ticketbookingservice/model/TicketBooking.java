@@ -1,20 +1,17 @@
 package com.cts.ticketbookingservice.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "tb_ticket_booking")
+@Document(collection = "tb_ticket_booking")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,17 +20,15 @@ public class TicketBooking {
 	@Id
 	private String id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "showing_id")
+	@DocumentReference
 	private Showing showing;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@Field
 	private User user;
 
-	@Column(name = "num_seats")
+	@Field
 	private int numSeats;
 
-	@Column(name = "ticket_seats")
+	@Field
 	private String status;
 }
