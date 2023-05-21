@@ -15,7 +15,7 @@ public class OpenApiConfig {
 	OpenAPI customOpenAPI(@Value("${application-description}") String appDesciption,
 			@Value("${application-version}") String appVersion) {
 		return new OpenAPI().info(new Info().title("User Authentication Service").version(appVersion)
-				.description(appDesciption).contact(new Contact().name("Prithwish Samanta").email("wprith@gmail.com"))
+				.description(appDesciption).contact(new Contact().name("Kushal Banik").email("kushalbanik93@gmail.com"))
 				.license(new License().name("MIT")));
 	}
 }
