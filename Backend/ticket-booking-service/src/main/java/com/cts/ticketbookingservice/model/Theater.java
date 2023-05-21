@@ -2,20 +2,18 @@ package com.cts.ticketbookingservice.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "tb_threater")
+
+@Document(collection = "theater")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,12 +22,12 @@ public class Theater {
 	@Id
 	private String id;
 
-	@Column(nullable = false)
+	@Field
 	private String name;
 
-	@Column(nullable = false)
+	@Field
 	private String location;
 
-	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, orphanRemoval = true)
+	@DocumentReference
 	private List<Showing> shows;
 }

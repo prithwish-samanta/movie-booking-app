@@ -1,9 +1,10 @@
 package com.cts.userauthservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import com.cts.userauthservice.model.SecretQuestion;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface SecretQuestionRepository extends JpaRepository<SecretQuestion, Long> {
+public interface SecretQuestionRepository extends MongoRepository<SecretQuestion, Long> {
 
 }

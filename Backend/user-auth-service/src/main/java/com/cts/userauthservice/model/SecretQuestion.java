@@ -1,17 +1,19 @@
 package com.cts.userauthservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "tb_secret_questions")
+@Document(collection = "tb_secret_questions")
 @Data
+@Builder
 public class SecretQuestion {
 	@Id
 	private Long id;
 
+	@Field
 	private String question;
 }
