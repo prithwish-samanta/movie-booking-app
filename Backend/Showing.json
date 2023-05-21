@@ -1,8 +1,8 @@
 [
     {
         "id":"MT1565cd96-3fd2-4f0e-a203-485abdfb2937",
-        "movie_id":"M28d95dfe-974c-4462-bc40-44650c185cf6",
-        "theater_id":"T2b764eb8-7b5c-4e86-a119-d10734dfcc77",
+        "movie":"M28d95dfe-974c-4462-bc40-44650c185cf6",
+        "theater":"T2b764eb8-7b5c-4e86-a119-d10734dfcc77",
         "show_time":"7:15PM",
         "total_seats":110.0,
         "booked_seats":0
