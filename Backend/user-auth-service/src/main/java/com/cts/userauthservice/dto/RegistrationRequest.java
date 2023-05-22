@@ -7,12 +7,14 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RegistrationRequest {
 	@NotBlank(message = "First name is required")
 	@Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")

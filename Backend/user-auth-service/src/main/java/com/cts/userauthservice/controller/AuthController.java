@@ -53,7 +53,7 @@ public class AuthController {
 		}
 		authService.register(registrationRequest);
 		return new ResponseEntity<Response>(
-				Response.builder().status("success").message("User resgistration successful").build(),
+				Response.builder().status("success").message("User resgistration successfull").build(),
 				HttpStatus.CREATED);
 	}
 

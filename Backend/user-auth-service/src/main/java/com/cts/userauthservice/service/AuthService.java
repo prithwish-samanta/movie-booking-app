@@ -40,7 +40,7 @@ public class AuthService {
 	private JwtProvider jwtProvider;
 
 	@Transactional
-	public void register(RegistrationRequest request) {
+	public User register(RegistrationRequest request) {
 		if (userRepository.existsByEmail(request.getEmail())) {
 			throw new EmailAlreadyExistsException("You email: " + request.getEmail() + " already exists");
 		}
@@ -54,6 +54,7 @@ public class AuthService {
 				.answerToSecretQuestion(request.getAnswerToSecretQuestion()).build();
 
 		userRepository.save(user);
+		return user;
 	}
 
 	@Transactional(readOnly = true)
@@ -68,7 +69,7 @@ public class AuthService {
 	}
 
 	@Transactional
-	public void forgotPassword(String userid, PasswordChangeRequest request) {
+	public User forgotPassword(String userid, PasswordChangeRequest request) {
 		User user = userRepository.findById(userid)
 				.orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userid));
 		if (user.getSecretQuestion().getId() != request.getSecurityQuestionId()
@@ -77,6 +78,7 @@ public class AuthService {
 		}
 		user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		userRepository.save(user);
+		return user;
 	}
 
 	@Transactional
