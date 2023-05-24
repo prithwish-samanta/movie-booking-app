@@ -2,6 +2,7 @@ package com.cts.userauthservice.service;
 
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ import com.cts.userauthservice.repository.UserRepository;
 import com.cts.userauthservice.util.JwtProvider;
 
 @Service
+@Slf4j
 public class AuthService {
 	@Autowired
 	private UserRepository userRepository;
@@ -41,6 +43,7 @@ public class AuthService {
 
 	@Transactional
 	public User register(RegistrationRequest request) {
+		log.info("Registration Request:{}",request);
 		if (userRepository.existsByEmail(request.getEmail())) {
 			throw new EmailAlreadyExistsException("You email: " + request.getEmail() + " already exists");
 		}
@@ -59,6 +62,7 @@ public class AuthService {
 
 	@Transactional(readOnly = true)
 	public LoginResponse login(LoginRequest request) {
+		log.info("Login Request:{}",request);
 		Authentication authenticate = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authenticate);

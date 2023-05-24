@@ -36,18 +36,19 @@ public class AdminService {
 	@Autowired
 	private MovieProducer movieProducer;
 
-	public void updateTicketStatus(String token, String ticketId, String newStatus) {
+	public boolean updateTicketStatus(String token, String ticketId, String newStatus) {
 		if (isAdmin(token)) {
 			TicketBooking ticket = bookingRepository.findById(ticketId)
 					.orElseThrow(() -> new ResourceNotFoundException("No ticket found with id: " + ticketId));
 			ticket.setStatus(newStatus);
 			bookingRepository.save(ticket);
+			return true;
 
 		} else
 			throw new InvalidTokenException("Only admin can update ticket status");
 	}
 
-	public void addMovie(String token, AddMovieRequest request) {
+	public Movie addMovie(String token, AddMovieRequest request) {
 		if (isAdmin(token)) {
 			// Create movie entity object from the request
 			Movie movie = Movie.builder().id("M" + generateRandomId()).title(request.getTitle())
@@ -71,20 +72,23 @@ public class AdminService {
 						.showTime(dto.getShowTime()).totalSeats(dto.getTotalSeats()).bookedSeats(0).build();
 				showingRepository.save(show);
 			}
+			return movie;
 		} else
 			throw new InvalidIsolationLevelException("Only admin can add new movie");
+
 	}
 
-	public void deleteMovie(String token, String movieId) {
+	public boolean deleteMovie(String token, String movieId) {
 		if (isAdmin(token)) {
 			Movie movie = movieRepository.findById(movieId)
 					.orElseThrow(() -> new ResourceNotFoundException("No movie found with id: " + movieId));
 			movieRepository.delete(movie);
+			return true;
 		} else
 			throw new InvalidTokenException("Only admin can perform delete movie action");
 	}
 
-	private boolean isAdmin(String token) {
+	public boolean isAdmin(String token) {
 		ValidationDto authResponse = authClient.validateAuthToken(token);
 		return authResponse.isStatus() && authResponse.getRole().equals("ADMIN");
 	}
