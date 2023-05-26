@@ -1,0 +1,58 @@
+<mat-card class="sign-up-card">
+  <mat-card-header class="sign-up-header">
+    <mat-card-title class="sign-up-title">Sign Up</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="sign-up-content">
+    <form>
+      <div class="row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" placeholder="Enter your first name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" placeholder="Enter your last name" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Enter your email" />
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Enter your password" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" placeholder="Confirm your password" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Security Question</mat-label>
+        <mat-select placeholder="Select a security question">
+          <mat-option
+            *ngFor="let q of securityQuestions"
+            [value]="q.question"
+            >{{ q.question }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Answer</mat-label>
+        <input matInput type="text" placeholder="Enter your answer" />
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" class="full-width">
+        Sign Up
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
