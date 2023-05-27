@@ -1,4 +1,5 @@
-<mat-card class="login-card">
+<app-progress-spinner *ngIf="isLoading"></app-progress-spinner>
+<mat-card *ngIf="!isLoading" class="login-card">
   <mat-card-header class="login-header">
     <mat-card-title class="login-title">Login</mat-card-title>
   </mat-card-header>

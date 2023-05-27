@@ -12,6 +12,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProgressSpinnerComponent } from './shared/progress-spinner/progress-spinner.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     ForgotPasswordComponent,
     HomeComponent,
     HeaderComponent,
+    ProgressSpinnerComponent,
   ],
   imports: [
     BrowserModule,
