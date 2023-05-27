@@ -24,6 +24,24 @@ export class AuthenticationService {
       );
   }
 
+  signup(signupCredentials: {
+    firstName: any;
+    lastName: any;
+    email: any;
+    password: any;
+    secretQuestionId: any;
+    answerToSecretQuestion: any;
+  }) {
+    return this.http
+      .post<User>(this.USER_AUTH_SERVICE_URL + '/register', signupCredentials)
+      .pipe(
+        catchError(this.handleError),
+        tap((response) => {
+          this.router.navigate(['/login']);
+        })
+      );
+  }
+
   autoLogin() {
     const user = localStorage.getItem('authData');
     if (!user) return;
