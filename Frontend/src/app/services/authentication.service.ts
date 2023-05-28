@@ -33,7 +33,28 @@ export class AuthenticationService {
     answerToSecretQuestion: any;
   }) {
     return this.http
-      .post<User>(this.USER_AUTH_SERVICE_URL + '/register', signupCredentials)
+      .post<any>(this.USER_AUTH_SERVICE_URL + '/register', signupCredentials)
+      .pipe(
+        catchError(this.handleError),
+        tap((response) => {
+          this.router.navigate(['/login']);
+        })
+      );
+  }
+
+  forgotPassword(
+    userId: any,
+    forgotPasswordRequest: {
+      securityQuestionId: any;
+      answer: any;
+      newPassword: any;
+    }
+  ) {
+    return this.http
+      .put<any>(
+        `${this.USER_AUTH_SERVICE_URL}/${userId}/forgot`,
+        forgotPasswordRequest
+      )
       .pipe(
         catchError(this.handleError),
         tap((response) => {

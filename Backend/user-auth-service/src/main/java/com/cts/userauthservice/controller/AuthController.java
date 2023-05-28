@@ -78,7 +78,7 @@ public class AuthController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Password reset successful", content = @Content(schema = @Schema(implementation = Response.class))),
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = Response.class))) })
-	@GetMapping("/{userid}/forgot")
+	@PutMapping("/{userid}/forgot")
 	public ResponseEntity<Response> forgotPassword(
 			@Parameter(description = "Id of the user", required = true) @PathVariable String userid,
 			@Parameter(description = "Forgot password request containing new password, security question and answer") @RequestBody @Valid PasswordChangeRequest passwordChangeRequest,
