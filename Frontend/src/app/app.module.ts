@@ -13,6 +13,7 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProgressSpinnerComponent } from './shared/progress-spinner/progress-spinner.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProgressSpinnerComponent } from './shared/progress-spinner/progress-spi
     HomeComponent,
     HeaderComponent,
     ProgressSpinnerComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

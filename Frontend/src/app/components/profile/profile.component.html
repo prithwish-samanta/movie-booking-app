@@ -1,0 +1,38 @@
+<mat-card class="profile-card">
+  <mat-card-header class="profile-header">
+    <mat-card-title class="profile-title">My Profile</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="profile-content">
+    <div class="profile-info">
+      <div class="profile-field">
+        <span class="profile-label">User ID:</span>
+        <span class="profile-value">{{ userId }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-label">First Name:</span>
+        <span class="profile-value">{{ firstName }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-label">Last Name:</span>
+        <span class="profile-value">{{ lastName }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-label">Email:</span>
+        <span class="profile-value">{{ email }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="profile-label">Role:</span>
+        <span class="profile-value">{{ role }}</span>
+      </div>
+    </div>
+
+    <button mat-raised-button color="accent" class="update-password-btn">
+      Update Password
+    </button>
+  </mat-card-content>
+</mat-card>
