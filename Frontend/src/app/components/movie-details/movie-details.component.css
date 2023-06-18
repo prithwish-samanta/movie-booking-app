@@ -1,0 +1,93 @@
+.movie-details-container {
+  padding: 24px;
+}
+
+.movie-details {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.poster-container {
+  width: 300px;
+  height: 450px;
+  margin-right: 24px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.poster-container img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.info-container {
+  color: #333;
+}
+
+.info-container h2 {
+  color: #ff4081;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rating mat-icon {
+  color: #ff4081;
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.description {
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.trailer-link {
+  color: #3f51b5;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 16px;
+  display: inline-block;
+}
+
+.trailer-link:hover {
+  text-decoration: underline;
+}
+
+.show-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.show-card {
+  width: 300px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px;
+}
+
+.show-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.show-card .theater-info p {
+  margin-bottom: 8px;
+}
+
+.show-card button {
+  margin-top: 16px;
+}
+
+.theater-info {
+  margin-bottom: 16px;
+}

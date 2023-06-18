@@ -1,3 +1,5 @@
+import { Theater } from './theater.model';
+
 export class Movie {
   constructor(
     public id: string,
@@ -13,6 +15,6 @@ export class Movie {
     public rating: number,
     public posterUrl: string,
     public trailerUrl: string,
-    public shows: string
+    public shows: Theater[]
   ) {}
 }

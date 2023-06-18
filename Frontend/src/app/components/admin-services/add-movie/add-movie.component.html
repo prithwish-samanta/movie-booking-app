@@ -1,0 +1,106 @@
+<div class="add-movie-page">
+    <h2>Add Movie</h2>
+    <form [formGroup]="movieForm" (ngSubmit)="submitMovie()" class="add-movie-form">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Title" formControlName="title" required>
+        <mat-error *ngIf="movieForm.get('title')!.hasError('required')">Title is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+        <mat-error *ngIf="movieForm.get('description')!.hasError('required')">Description is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Runtime" formControlName="runtime" required>
+        <mat-error *ngIf="movieForm.get('runtime')!.hasError('required')">Runtime is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput [matDatepicker]="releaseDatepicker" placeholder="Release Date" formControlName="releaseDate" required>
+        <mat-datepicker-toggle matSuffix [for]="releaseDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #releaseDatepicker></mat-datepicker>
+        <mat-error *ngIf="movieForm.get('releaseDate')!.hasError('required')">Release Date is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Genre" formControlName="genre" required>
+        <mat-error *ngIf="movieForm.get('genre')!.hasError('required')">Genre is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Language" formControlName="language" required>
+        <mat-error *ngIf="movieForm.get('language')!.hasError('required')">Language is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Country" formControlName="country" required>
+        <mat-error *ngIf="movieForm.get('country')!.hasError('required')">Country is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Director" formControlName="director" required>
+        <mat-error *ngIf="movieForm.get('director')!.hasError('required')">Director is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Cast" formControlName="cast" required>
+        <mat-error *ngIf="movieForm.get('cast')!.hasError('required')">Cast is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Rating" formControlName="rating" required>
+        <mat-error *ngIf="movieForm.get('rating')!.hasError('required')">Rating is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Poster URL" formControlName="posterUrl" required>
+        <mat-error *ngIf="movieForm.get('posterUrl')!.hasError('required')">Poster URL is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Trailer URL" formControlName="trailerUrl" required>
+        <mat-error *ngIf="movieForm.get('trailerUrl')!.hasError('required')">Trailer URL is required</mat-error>
+      </mat-form-field>
+  
+      <h3>Add Theater</h3>
+      <div formArrayName="theaters">
+        <div class="theater-group" *ngFor="let theater of theaterControls.controls; let i = index">
+          <div class="theater-details">
+            <mat-form-field>
+              <input matInput placeholder="Theater Name" formControlName="{{ i }}.name" required>
+              <mat-error *ngIf="theater.get('name')!.hasError('required')">Theater Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="showtimeDatepicker" placeholder="Showtime Date" formControlName="{{ i }}.showtimeDate" required>
+              <mat-datepicker-toggle matSuffix [for]="showtimeDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #showtimeDatepicker></mat-datepicker>
+              <mat-error *ngIf="theater.get('showtimeDate')!.hasError('required')">Showtime Date is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Available Seats" formControlName="{{ i }}.availableSeats" required>
+              <mat-error *ngIf="theater.get('availableSeats')!.hasError('required')">Available Seats is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Total Seats" formControlName="{{ i }}.totalSeats" required>
+              <mat-error *ngIf="theater.get('totalSeats')!.hasError('required')">Total Seats is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Location" formControlName="{{ i }}.location" required>
+              <mat-error *ngIf="theater.get('location')!.hasError('required')">Location is required</mat-error>
+            </mat-form-field>
+          </div>
+          <button mat-icon-button color="warn" (click)="removeTheater(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" (click)="addTheater()">Add Theater</button>
+  
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit">Add Movie</button>
+        <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+  

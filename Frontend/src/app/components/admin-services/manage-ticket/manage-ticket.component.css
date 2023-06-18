@@ -1,20 +1,20 @@
-.forgot-password-card {
+.manage-ticket-container {
   max-width: 400px;
   margin: 0 auto;
   background-color: #fff;
   margin-top: 80px;
 }
 
-.forgot-password-header {
+.manage-ticket-header {
   background-color: #f44336;
   color: #fff;
 }
 
-.forgot-password-title {
+.manage-ticket-title {
   font-size: 24px;
   font-weight: bold;
 }
 
-.forgot-password-content {
+.manage-ticket-content {
   padding: 24px;
 }

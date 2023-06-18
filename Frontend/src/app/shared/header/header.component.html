@@ -17,7 +17,17 @@
   <mat-menu #profileMenu="matMenu">
     <button mat-menu-item routerLink="profile">Profile</button>
     <button mat-menu-item *ngIf="!isAdmin">My Bookings</button>
-    <button mat-menu-item *ngIf="isAdmin">Admin service</button>
+    <button mat-menu-item *ngIf="isAdmin" [matMenuTriggerFor]="adminSubMenu">
+      Admin service
+    </button>
     <button mat-menu-item (click)="onLogout()">Logout</button>
+  </mat-menu>
+  <mat-menu #adminSubMenu="matMenu">
+    <button mat-menu-item routerLink="admin/manage-movies">
+      Manage movies
+    </button>
+    <button mat-menu-item routerLink="admin/manage-ticket">
+      Manage ticket
+    </button>
   </mat-menu>
 </mat-toolbar>

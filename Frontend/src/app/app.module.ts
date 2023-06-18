@@ -11,9 +11,15 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProgressSpinnerComponent } from './shared/progress-spinner/progress-spinner.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { ManageMoviesComponent } from './components/admin-services/manage-movies/manage-movies.component';
+import { ManageTicketComponent } from './components/admin-services/manage-ticket/manage-ticket.component';
+import { AddMovieComponent } from './components/admin-services/add-movie/add-movie.component';
+import { AuthInterceptorService } from './guards/auth-interceptor.service';
+import { BookTicketComponent } from './components/book-ticket/book-ticket.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +31,11 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     ProgressSpinnerComponent,
     ProfileComponent,
+    MovieDetailsComponent,
+    BookTicketComponent,
+    ManageMoviesComponent,
+    ManageTicketComponent,
+    AddMovieComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +46,13 @@ import { ProfileComponent } from './components/profile/profile.component';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
