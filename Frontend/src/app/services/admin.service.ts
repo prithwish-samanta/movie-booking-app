@@ -2,6 +2,29 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Movie } from '../models/movie.model';
+
+interface Shows {
+  theaterId: string;
+  showTime: string;
+  totalSeats: number;
+}
+
+export interface AddMovieRequest {
+  title: string;
+  description: string;
+  releaseDate: string;
+  runtime: number;
+  genre: string;
+  language: string;
+  country: string;
+  director: string;
+  cast: string;
+  rating: string;
+  posterUrl: string;
+  trailerUrl: string;
+  shows: Shows[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -15,6 +38,12 @@ export class AdminService {
         `${this.ADMIN_SERVICE_URL}/update/${ticketId}/${status.toUpperCase()}`,
         {}
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  addNewMovie(movie: AddMovieRequest) {
+    return this.http
+      .post(`${this.ADMIN_SERVICE_URL}/addmovie`, movie)
       .pipe(catchError(this.handleError));
   }
 

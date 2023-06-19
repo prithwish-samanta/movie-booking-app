@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AddMovieRequest, AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-add-movie',
@@ -7,60 +9,89 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-movie.component.css'],
 })
 export class AddMovieComponent {
-  movieForm!: FormGroup;
+  availableTheaters = [
+    {
+      id: 'T2b764eb8-7b5c-4e86-a119-d10734dfcc77',
+      name: 'Cinepolis: Acropolis Mall, Kolkata',
+    },
+    {
+      id: 'T71b82fc1-f31e-4bf5-bd7a-526f96bb1417',
+      name: 'Miraj Cinemas: Newtown, Kolkata',
+    },
+    {
+      id: 'T82326e44-37b4-4e10-8b63-41904a6eacc8',
+      name: 'INOX: City Center, Salt Lake',
+    },
+    {
+      id: 'Tb38ca66e-f538-4cbc-bd9f-f8365c0b2213',
+      name: 'Hind INOX: Kolkata',
+    },
+  ];
+  isLoading = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  addMovieRequest: AddMovieRequest = {
+    title: '',
+    description: '',
+    releaseDate: '',
+    runtime: 0.0,
+    genre: '',
+    language: '',
+    country: '',
+    director: '',
+    cast: '',
+    rating: '',
+    posterUrl: '',
+    trailerUrl: '',
+    shows: [],
+  };
 
-  ngOnInit(): void {
-    this.movieForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      runtime: ['', Validators.required],
-      releaseDate: ['', Validators.required],
-      genre: ['', Validators.required],
-      language: ['', Validators.required],
-      country: ['', Validators.required],
-      director: ['', Validators.required],
-      cast: ['', Validators.required],
-      rating: ['', Validators.required],
-      posterUrl: ['', Validators.required],
-      trailerUrl: ['', Validators.required],
-      theaters: this.formBuilder.array([]),
-    });
-  }
-
-  get theaterControls() {
-    return this.movieForm.get('theaters') as FormArray;
-  }
+  constructor(
+    private adminService: AdminService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   addTheater() {
-    const theaterGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      showtimeDate: ['', Validators.required],
-      availableSeats: ['', Validators.required],
-      totalSeats: ['', Validators.required],
-      location: ['', Validators.required],
+    this.addMovieRequest.shows.push({
+      theaterId: '',
+      showTime: '',
+      totalSeats: 0,
     });
-
-    this.theaterControls.push(theaterGroup);
   }
 
   removeTheater(index: number) {
-    this.theaterControls.removeAt(index);
+    this.addMovieRequest.shows.splice(index, 1);
   }
 
-  submitMovie() {
-    if (this.movieForm.valid) {
-      // Perform movie submission logic here
-      console.log(this.movieForm.value);
-    } else {
-      // Form is invalid, display error messages
-      this.movieForm.markAllAsTouched();
-    }
+  submitMovieForm() {
+    this.addMovieRequest.shows.forEach((show) => {
+      const theater = this.availableTheaters.find(
+        (t) => t.id === show.theaterId
+      );
+      if (theater) {
+        show.theaterId = theater.id;
+      }
+    });
+    console.log(this.addMovieRequest);
+    this.isLoading = true;
+    this.adminService.addNewMovie(this.addMovieRequest).subscribe({
+      complete: () => {
+        this.isLoading = false;
+        this.openSnackBar('Movie added successfully');
+        this.router.navigate(['/admin/manage-movies']);
+      },
+      error: (errorMsg) => {
+        this.isLoading = false;
+        this.openSnackBar(errorMsg);
+      },
+    });
   }
 
-  cancel() {
-    // Perform cancel logic here
-    console.log('Cancelled');
+  openSnackBar(msg: string) {
+    this.snackBar.open(msg, 'Ok', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 2500,
+    });
   }
 }

@@ -3,7 +3,7 @@ export class Theater {
     public id: string,
     public name: string,
     public location: string,
-    public showTime: number,
+    public showTime: string,
     public totalSeats: number,
     public bookedSeats: number
   ) {}
