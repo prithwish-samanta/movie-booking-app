@@ -63,13 +63,12 @@ export class MovieDetailsComponent {
   openDialog(showId: string) {
     const dialogRef = this.dialog.open(BookTicketComponent, {
       width: '300px',
+      height: '290px',
       data: { showId: showId },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.openSnackBar(result);
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload();
     });
   }
 

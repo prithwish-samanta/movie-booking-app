@@ -8,6 +8,10 @@ import { BookingService } from 'src/app/services/booking.service';
   styleUrls: ['./book-ticket.component.css'],
 })
 export class BookTicketComponent {
+  isSuccess = false;
+  isError = false;
+  errMessage = '';
+  isLoading = false;
   seatsToBook: number = 1;
 
   constructor(
@@ -22,6 +26,7 @@ export class BookTicketComponent {
 
   bookTickets(): void {
     if (this.seatsToBook > 0) {
+      this.isLoading = true;
       this.ticketBookService
         .bookTicket({
           showingId: this.data.showId,
@@ -29,10 +34,13 @@ export class BookTicketComponent {
         })
         .subscribe({
           complete: () => {
-            this.dialogRef.close('Ticket booking successfully!');
+            this.isLoading = false;
+            this.isSuccess = true;
           },
           error: (errorMsg) => {
-            this.dialogRef.close(errorMsg);
+            this.isLoading = false;
+            this.errMessage = errorMsg;
+            this.isError = true;
           },
         });
     }
