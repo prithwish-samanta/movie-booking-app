@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Movie } from '../models/movie.model';
+import { constants } from '../shared/constants';
 
 interface Shows {
   theaterId: string;
@@ -28,14 +28,14 @@ export interface AddMovieRequest {
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  ADMIN_SERVICE_URL: string = 'http://localhost:8084/api/v1.0/moviebooking';
-
   constructor(private http: HttpClient) {}
 
   updateTicketStatus(ticketId: string, status: string) {
     return this.http
       .put(
-        `${this.ADMIN_SERVICE_URL}/update/${ticketId}/${status.toUpperCase()}`,
+        `${
+          constants.ADMIN_SERVICE_URL
+        }/update/${ticketId}/${status.toUpperCase()}`,
         {}
       )
       .pipe(catchError(this.handleError));
@@ -43,13 +43,13 @@ export class AdminService {
 
   addNewMovie(movie: AddMovieRequest) {
     return this.http
-      .post(`${this.ADMIN_SERVICE_URL}/addmovie`, movie)
+      .post(`${constants.ADMIN_SERVICE_URL}/addmovie`, movie)
       .pipe(catchError(this.handleError));
   }
 
   deleteMovieById(id: string) {
     return this.http
-      .delete(`${this.ADMIN_SERVICE_URL}/delete/${id}`)
+      .delete(`${constants.ADMIN_SERVICE_URL}/delete/${id}`)
       .pipe(catchError(this.handleError));
   }
 

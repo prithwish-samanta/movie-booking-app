@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.ResourceAccessException;
 
+import com.cts.userauthservice.dto.ForgotPasswordRequest;
 import com.cts.userauthservice.dto.LoginRequest;
 import com.cts.userauthservice.dto.LoginResponse;
-import com.cts.userauthservice.dto.PasswordChangeRequest;
 import com.cts.userauthservice.dto.RegistrationRequest;
+import com.cts.userauthservice.dto.UpdatePasswordRequest;
 import com.cts.userauthservice.dto.ValidationDto;
 import com.cts.userauthservice.exceptions.EmailAlreadyExistsException;
 import com.cts.userauthservice.exceptions.ResourceNotFoundException;
@@ -68,7 +69,7 @@ public class AuthService {
 	}
 
 	@Transactional
-	public void forgotPassword(String userid, PasswordChangeRequest request) {
+	public void forgotPassword(String userid, ForgotPasswordRequest request) {
 		User user = userRepository.findById(userid)
 				.orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userid));
 		if (user.getSecretQuestion().getId() != request.getSecurityQuestionId()
@@ -80,15 +81,26 @@ public class AuthService {
 	}
 
 	@Transactional
-	public void updatePassword(String userid, PasswordChangeRequest request) {
-		User user = userRepository.findById(userid)
-				.orElseThrow(() -> new ResourceNotFoundException("No user found with id: " + userid));
-		if (user.getSecretQuestion().getId() != request.getSecurityQuestionId()
-				|| !user.getAnswerToSecretQuestion().equals(request.getAnswer())) {
-			throw new RuntimeException("Secret question or answer is incorrect");
+	public void updatePassword(String jwtToken, UpdatePasswordRequest request) {
+		if(validateAuthToken(jwtToken).isStatus()) {
+			try {
+				jwtToken = jwtToken.substring(7);
+				String email = jwtProvider.extractSubject(jwtToken);
+				User user = userRepository.findByEmail(email)
+						.orElseThrow(() -> new ResourceNotFoundException("No user found with email: " + email));
+				if (user.getSecretQuestion().getId() != request.getSecurityQuestionId()
+						|| !user.getAnswerToSecretQuestion().equals(request.getAnswer())) {
+					throw new RuntimeException("Secret question or answer is incorrect");
+				}
+				user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+				userRepository.save(user);
+			}
+			catch(Exception e) {
+				throw e;
+			}
 		}
-		user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-		userRepository.save(user);
+		else
+			throw new RuntimeException("Invalid jwt token");
 	}
 
 	public ValidationDto validateAuthToken(String token) {

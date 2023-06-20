@@ -7,16 +7,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { constants } from 'src/app/shared/constants';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css'],
+  selector: 'app-update-password',
+  templateUrl: './update-password.component.html',
+  styleUrls: ['./update-password.component.css']
 })
-export class ForgotPasswordComponent {
+export class UpdatePasswordComponent {
   securityQuestions = constants.SECURITY_QUESTIONS;
   isLoading: boolean = false;
 
-  forgotPasswordForm = new FormGroup({
-    userId: new FormControl('', [Validators.required]),
+  updatePasswordForm = new FormGroup({
     securityQuestionId: new FormControl(1, [Validators.required]),
     answer: new FormControl('', [Validators.required]),
     newPassword: new FormControl('', [
@@ -25,49 +24,28 @@ export class ForgotPasswordComponent {
     ]),
   });
 
-  userSubscription: Subscription = new Subscription();
-
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router,
     private snackBar: MatSnackBar
   ) {}
 
-  get userId() {
-    return this.forgotPasswordForm.get('userId');
-  }
-
   get securityQuestionId() {
-    return this.forgotPasswordForm.get('securityQuestionId');
+    return this.updatePasswordForm.get('securityQuestionId');
   }
 
   get answer() {
-    return this.forgotPasswordForm.get('answer');
+    return this.updatePasswordForm.get('answer');
   }
 
   get newPassword() {
-    return this.forgotPasswordForm.get('newPassword');
-  }
-
-  ngOnInit() {
-    this.userSubscription = this.authenticationService.user.subscribe(
-      (user) => {
-        if (user) {
-          this.router.navigate(['./home']);
-        }
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    return this.updatePasswordForm.get('newPassword');
   }
 
   onSubmit() {
-    if (this.forgotPasswordForm.valid) {
+    if (this.updatePasswordForm.valid) {
       this.isLoading = true;
       this.authenticationService
-        .forgotPassword(this.userId?.value, {
+        .updatePassword({
           securityQuestionId: this.securityQuestionId?.value,
           answer: this.answer?.value,
           newPassword: this.newPassword?.value,
@@ -75,7 +53,7 @@ export class ForgotPasswordComponent {
         .subscribe({
           complete: () => {
             this.isLoading = false;
-            this.openSnackBar('Your password recovered successfully');
+            this.openSnackBar('Your password updated successfully');
           },
           error: (errorMessage) => {
             this.isLoading = false;

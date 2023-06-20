@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PasswordChangeRequest {
+public class UpdatePasswordRequest {
 	@NotNull
 	private Long securityQuestionId;
 

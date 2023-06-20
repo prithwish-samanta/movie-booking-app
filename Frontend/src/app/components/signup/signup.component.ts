@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { constants } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-signup',
@@ -11,13 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-  securityQuestions = [
-    { id: 1, question: 'What is your mother"s maiden name?' },
-    { id: 2, question: 'What is your favorite color?' },
-    { id: 3, question: 'What was the name of your first pet?' },
-    { id: 4, question: 'In what city were you born?' },
-    { id: 5, question: 'What is the name of your favorite teacher?' },
-  ];
+  securityQuestions = constants.SECURITY_QUESTIONS;
   isLoading: boolean = false;
 
   signupForm = new FormGroup({

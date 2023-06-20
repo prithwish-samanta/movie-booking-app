@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cts.userauthservice.dto.ForgotPasswordRequest;
 import com.cts.userauthservice.dto.LoginRequest;
 import com.cts.userauthservice.dto.LoginResponse;
-import com.cts.userauthservice.dto.PasswordChangeRequest;
 import com.cts.userauthservice.dto.RegistrationRequest;
 import com.cts.userauthservice.dto.Response;
+import com.cts.userauthservice.dto.UpdatePasswordRequest;
 import com.cts.userauthservice.dto.ValidationDto;
 import com.cts.userauthservice.service.AuthService;
 
@@ -81,7 +82,7 @@ public class AuthController {
 	@PutMapping("/{userid}/forgot")
 	public ResponseEntity<Response> forgotPassword(
 			@Parameter(description = "Id of the user", required = true) @PathVariable String userid,
-			@Parameter(description = "Forgot password request containing new password, security question and answer") @RequestBody @Valid PasswordChangeRequest passwordChangeRequest,
+			@Parameter(description = "Forgot password request containing new password, security question and answer") @RequestBody @Valid ForgotPasswordRequest passwordChangeRequest,
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return errorResponse(bindingResult.getAllErrors());
@@ -96,15 +97,15 @@ public class AuthController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Password update successful", content = @Content(schema = @Schema(implementation = Response.class))),
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = Response.class))) })
-	@PutMapping("/{userid}/updatepassword")
+	@PutMapping("/updatepassword")
 	public ResponseEntity<Response> updatePassword(
-			@Parameter(description = "Id of the user", required = true) @PathVariable String userid,
-			@Parameter(description = "Update password request containing new password, security question and answer") @RequestBody @Valid PasswordChangeRequest passwordChangeRequest,
+			@Parameter(description = "JWT token to authenticate the requester", required = true) @RequestHeader(name = "Authorization") String jwtToken,
+			@Parameter(description = "Update password request containing new password, security question and answer") @RequestBody @Valid UpdatePasswordRequest passwordChangeRequest,
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return errorResponse(bindingResult.getAllErrors());
 		}
-		authService.updatePassword(userid, passwordChangeRequest);
+		authService.updatePassword(jwtToken, passwordChangeRequest);
 		return new ResponseEntity<Response>(
 				Response.builder().status("success").message("Your password updated successfully").build(),
 				HttpStatus.OK);

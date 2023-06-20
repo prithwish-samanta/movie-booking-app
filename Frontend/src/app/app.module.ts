@@ -20,6 +20,7 @@ import { ManageTicketComponent } from './components/admin-services/manage-ticket
 import { AddMovieComponent } from './components/admin-services/add-movie/add-movie.component';
 import { AuthInterceptorService } from './guards/auth-interceptor.service';
 import { BookTicketComponent } from './components/book-ticket/book-ticket.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BookTicketComponent } from './components/book-ticket/book-ticket.compon
     LoginComponent,
     SignupComponent,
     ForgotPasswordComponent,
+    UpdatePasswordComponent,
     HomeComponent,
     HeaderComponent,
     ProgressSpinnerComponent,

@@ -10,6 +10,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { ManageMoviesComponent } from './components/admin-services/manage-movies/manage-movies.component';
 import { ManageTicketComponent } from './components/admin-services/manage-ticket/manage-ticket.component';
 import { AddMovieComponent } from './components/admin-services/add-movie/add-movie.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,6 +20,11 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'details/:movieId', component: MovieDetailsComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'update-password',
+    component: UpdatePasswordComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'admin/manage-movies',
     component: ManageMoviesComponent,
